@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+@theme {
+  --color-noir: #080808;
+  --color-noir-2: #111010;
+  --color-noir-3: #1a1816;
+  --color-gold: #c59a45;
+  --color-gold-light: #e5c77f;
+  --color-champagne: #f2e4cd;
+  --color-ivory: #faf6ef;
+  --color-ruby: #790d1b;
+
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-display: var(--font-cinzel), "Cinzel", Georgia, serif;
+  --font-sans: var(--font-montserrat), "Montserrat", system-ui, sans-serif;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: dark;
+  --gold-metal: linear-gradient(
+    115deg,
+    #7a5a22 0%,
+    #c59a45 22%,
+    #f4e2a8 38%,
+    #c59a45 52%,
+    #8c6a2c 70%,
+    #e5c77f 88%,
+    #9a7432 100%
+  );
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-noir);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-noir);
+}
+
+:focus-visible {
+  outline: 1px solid var(--color-gold-light);
+  outline-offset: 3px;
+}
+
+/* ---------- Utilitários de marca ---------- */
+@utility text-gold-metal {
+  background-image: var(--gold-metal);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-gold-metal {
+  background-image: var(--gold-metal);
+  background-size: 200% 100%;
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+@utility container-luxe {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 768px) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility gold-rule {
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+/* textura sutil de grão para profundidade */
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Reflexo dourado que percorre um elemento (Gold Light Sweep) */
+.sweep {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.sweep::before {
+  content: "";
+  position: absolute;
+  inset: -20% auto -20% -100%;
+  width: 45%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 236, 190, 0.28), transparent);
+  transform: skewX(-18deg) translateX(0);
+  transition: transform 1.1s var(--ease-luxe);
+}
+.sweep:hover::before,
+.sweep.is-swept::before {
+  transform: skewX(-18deg) translateX(560%);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #141312 0%, #1f1c18 50%, #141312 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes gold-pan {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-gold-pan {
+  animation: gold-pan 8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

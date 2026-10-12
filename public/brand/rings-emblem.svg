@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="80 250 640 460" width="640" height="460"><defs>
+  <linearGradient id="gaside" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#5a3d12"/><stop offset=".18" stop-color="#f3dc9b"/><stop offset=".35" stop-color="#a8792c"/>
+    <stop offset=".55" stop-color="#6b4a17"/><stop offset=".78" stop-color="#e5c77f"/><stop offset="1" stop-color="#5a3d12"/>
+  </linearGradient>
+  <linearGradient id="gatop" x1="0" x2="1" y1="0" y2="1">
+    <stop offset="0" stop-color="#f3dc9b"/><stop offset=".3" stop-color="#c59a45"/><stop offset=".6" stop-color="#6b4a17"/><stop offset="1" stop-color="#e5c77f"/>
+  </linearGradient>
+  <linearGradient id="gain" x1="1" x2="0" y1="0" y2="0">
+    <stop offset="0" stop-color="#5a3d12"/><stop offset=".4" stop-color="#a8792c"/><stop offset=".6" stop-color="#e5c77f"/><stop offset="1" stop-color="#5a3d12"/>
+  </linearGradient>
+  <clipPath id="gahole"><ellipse cx="320" cy="430" rx="157.7" ry="76.44"/></clipPath>
+</defs><path d="M130,430 L130,494 A190,98 0 0 0 510,494 L510,430 A190,98 0 0 1 130,430 Z" fill="url(#gaside)"/><g clip-path="url(#gahole)"><path d="M162.3,430 A157.7,76.44 0 0 1 477.7,430 L477.7,494 A157.7,76.44 0 0 0 162.3,494 Z" fill="url(#gain)"/></g><path fill-rule="evenodd" fill="url(#gatop)" d="M130,430 A190,98 0 1 0 510,430 A190,98 0 1 0 130,430 Z M162.3,430 A157.7,76.44 0 1 0 477.7,430 A157.7,76.44 0 1 0 162.3,430 Z"/><path d="M187,369.24 A190,98 0 0 1 339,332.98" stroke="#fff" stroke-opacity=".55" stroke-width="3" fill="none" stroke-linecap="round"/><defs>
+  <linearGradient id="gbside" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#5a3d12"/><stop offset=".18" stop-color="#f3dc9b"/><stop offset=".35" stop-color="#a8792c"/>
+    <stop offset=".55" stop-color="#6b4a17"/><stop offset=".78" stop-color="#e5c77f"/><stop offset="1" stop-color="#5a3d12"/>
+  </linearGradient>
+  <linearGradient id="gbtop" x1="0" x2="1" y1="0" y2="1">
+    <stop offset="0" stop-color="#f3dc9b"/><stop offset=".3" stop-color="#c59a45"/><stop offset=".6" stop-color="#6b4a17"/><stop offset="1" stop-color="#e5c77f"/>
+  </linearGradient>
+  <linearGradient id="gbin" x1="1" x2="0" y1="0" y2="0">
+    <stop offset="0" stop-color="#5a3d12"/><stop offset=".4" stop-color="#a8792c"/><stop offset=".6" stop-color="#e5c77f"/><stop offset="1" stop-color="#5a3d12"/>
+  </linearGradient>
+  <clipPath id="gbhole"><ellipse cx="500" cy="540" rx="136.95" ry="67.08"/></clipPath>
+</defs><path d="M335,540 L335,590 A165,86 0 0 0 665,590 L665,540 A165,86 0 0 1 335,540 Z" fill="url(#gbside)"/><g clip-path="url(#gbhole)"><path d="M363.05,540 A136.95,67.08 0 0 1 636.95,540 L636.95,590 A136.95,67.08 0 0 0 363.05,590 Z" fill="url(#gbin)"/></g><path fill-rule="evenodd" fill="url(#gbtop)" d="M335,540 A165,86 0 1 0 665,540 A165,86 0 1 0 335,540 Z M363.05,540 A136.95,67.08 0 1 0 636.95,540 A136.95,67.08 0 1 0 363.05,540 Z"/><path d="M384.5,486.68 A165,86 0 0 1 516.5,454.86" stroke="#fff" stroke-opacity=".55" stroke-width="3" fill="none" stroke-linecap="round"/></svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+<defs>
+  <radialGradient id="bg" cx=".5" cy=".42" r=".75"><stop offset="0" stop-color="#2a2218"/><stop offset=".45" stop-color="#120f0b"/><stop offset="1" stop-color="#050505"/></radialGradient>
+  <radialGradient id="shadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".8"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#bg)"/>
+<ellipse cx="400" cy="700" rx="300" ry="50" fill="url(#shadow)"/>
+<defs>
+  <linearGradient id="gaside" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#5a3d12"/><stop offset=".18" stop-color="#f3dc9b"/><stop offset=".35" stop-color="#a8792c"/>
+    <stop offset=".55" stop-color="#6b4a17"/><stop offset=".78" stop-color="#e5c77f"/><stop offset="1" stop-color="#5a3d12"/>
+  </linearGradient>
+  <linearGradient id="gatop" x1="0" x2="1" y1="0" y2="1">
+    <stop offset="0" stop-color="#f3dc9b"/><stop offset=".3" stop-color="#c59a45"/><stop offset=".6" stop-color="#6b4a17"/><stop offset="1" stop-color="#e5c77f"/>
+  </linearGradient>
+  <linearGradient id="gain" x1="1" x2="0" y1="0" y2="0">
+    <stop offset="0" stop-color="#5a3d12"/><stop offset=".4" stop-color="#a8792c"/><stop offset=".6" stop-color="#e5c77f"/><stop offset="1" stop-color="#5a3d12"/>
+  </linearGradient>
+  <clipPath id="gahole"><ellipse cx="400" cy="470" rx="190.89999999999998" ry="93.60000000000001"/></clipPath>
+</defs><path d="M170,470 L170,540 A230,120 0 0 0 630,540 L630,470 A230,120 0 0 1 170,470 Z" fill="url(#gaside)"/><g clip-path="url(#gahole)"><path d="M209.10000000000002,470 A190.89999999999998,93.60000000000001 0 0 1 590.9,470 L590.9,540 A190.89999999999998,93.60000000000001 0 0 0 209.10000000000002,540 Z" fill="url(#gain)"/></g><path fill-rule="evenodd" fill="url(#gatop)" d="M170,470 A230,120 0 1 0 630,470 A230,120 0 1 0 170,470 Z M209.10000000000002,470 A190.89999999999998,93.60000000000001 0 1 0 590.9,470 A190.89999999999998,93.60000000000001 0 1 0 209.10000000000002,470 Z"/><path d="M239,395.6 A230,120 0 0 1 423,351.2" stroke="#fff" stroke-opacity=".55" stroke-width="3" fill="none" stroke-linecap="round"/>
+<text x="400" y="955" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14" letter-spacing="6" fill="#c59a45" fill-opacity=".55">IMAGEM ILUSTRATIVA</text>
+</svg>
