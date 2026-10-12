@@ -32,7 +32,15 @@ Sem `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` o site usa **da
 - **nenhum depoimento é inventado**: a seção fica oculta;
 - o painel `/admin` mostra as instruções de configuração e não grava nada.
 
-## Conectando o Supabase
+## Supabase em uso
+
+O projeto **franca-joias** (região São Paulo, `cgnibwjfavxohvkagmck`) já está criado e configurado: esquema, RLS, bucket `media`,
+categorias e coleções iniciais. A URL e a chave **publishable** (pública por natureza) estão em `.env.production`, então o build de
+produção já usa o banco real. Para desenvolver localmente com o banco real, copie `.env.production` para `.env.local`.
+
+Falta apenas criar o usuário administrador (passos 5 e 6 abaixo).
+
+## Conectando um novo projeto Supabase
 
 1. Crie um projeto em [supabase.com](https://supabase.com).
 2. No **SQL Editor**, execute `supabase/migrations/0001_init.sql` (tabelas, RLS, bucket `media` e políticas de Storage).

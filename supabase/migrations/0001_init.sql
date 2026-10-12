@@ -14,7 +14,11 @@ create table if not exists public.admin_users (
 );
 
 -- Função usada pelas políticas RLS. SECURITY DEFINER evita recursão de RLS.
-create or replace function public.is_admin()
+-- Fica no schema "private", que não é exposto pela API REST.
+create schema if not exists private;
+grant usage on schema private to anon, authenticated;
+
+create or replace function private.is_admin()
 returns boolean
 language sql
 stable
@@ -24,12 +28,12 @@ as $$
   select exists (select 1 from public.admin_users where user_id = auth.uid());
 $$;
 
-revoke all on function public.is_admin() from public;
-grant execute on function public.is_admin() to anon, authenticated;
+revoke all on function private.is_admin() from public;
+grant execute on function private.is_admin() to anon, authenticated;
 
 -- Atualiza updated_at automaticamente
 create or replace function public.touch_updated_at()
-returns trigger language plpgsql as $$
+returns trigger language plpgsql set search_path = public as $$
 begin
   new.updated_at = now();
   return new;
@@ -101,6 +105,8 @@ create table if not exists public.collections (
   created_at  timestamptz not null default now()
 );
 
+create index if not exists collections_category_idx on public.collections (category_id);
+
 -- ---------------------------------------------------------------------
 -- Depoimentos (somente reais, cadastrados pela equipe)
 -- ---------------------------------------------------------------------
@@ -158,7 +164,7 @@ alter table public.site_settings enable row level security;
 -- admin_users: cada usuário só enxerga a própria linha; ninguém escreve via API
 drop policy if exists "admin_users self read" on public.admin_users;
 create policy "admin_users self read" on public.admin_users
-  for select to authenticated using (user_id = auth.uid());
+  for select to authenticated using (user_id = (select auth.uid()));
 
 -- Leitura pública
 drop policy if exists "categories public read" on public.categories;
@@ -167,15 +173,15 @@ create policy "categories public read" on public.categories
 
 drop policy if exists "products public read" on public.products;
 create policy "products public read" on public.products
-  for select using (published or public.is_admin());
+  for select using (published or (select private.is_admin()));
 
 drop policy if exists "collections public read" on public.collections;
 create policy "collections public read" on public.collections
-  for select using (published or public.is_admin());
+  for select using (published or (select private.is_admin()));
 
 drop policy if exists "testimonials public read" on public.testimonials;
 create policy "testimonials public read" on public.testimonials
-  for select using (published or public.is_admin());
+  for select using (published or (select private.is_admin()));
 
 drop policy if exists "settings public read" on public.site_settings;
 create policy "settings public read" on public.site_settings
@@ -189,15 +195,15 @@ begin
     execute format('drop policy if exists "%1$s admin insert" on public.%1$s', t);
     execute format('drop policy if exists "%1$s admin update" on public.%1$s', t);
     execute format('drop policy if exists "%1$s admin delete" on public.%1$s', t);
-    execute format('create policy "%1$s admin insert" on public.%1$s for insert to authenticated with check (public.is_admin())', t);
-    execute format('create policy "%1$s admin update" on public.%1$s for update to authenticated using (public.is_admin()) with check (public.is_admin())', t);
-    execute format('create policy "%1$s admin delete" on public.%1$s for delete to authenticated using (public.is_admin())', t);
+    execute format('create policy "%1$s admin insert" on public.%1$s for insert to authenticated with check ((select private.is_admin()))', t);
+    execute format('create policy "%1$s admin update" on public.%1$s for update to authenticated using ((select private.is_admin())) with check ((select private.is_admin()))', t);
+    execute format('create policy "%1$s admin delete" on public.%1$s for delete to authenticated using ((select private.is_admin()))', t);
   end loop;
 end $$;
 
 drop policy if exists "settings admin update" on public.site_settings;
 create policy "settings admin update" on public.site_settings
-  for update to authenticated using (public.is_admin()) with check (public.is_admin());
+  for update to authenticated using ((select private.is_admin())) with check ((select private.is_admin()));
 
 -- =====================================================================
 -- Storage: bucket público "media" (leitura pública, escrita só admin)
@@ -207,18 +213,20 @@ values ('media', 'media', true, 10485760,
         array['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'model/gltf-binary', 'model/gltf+json', 'application/octet-stream'])
 on conflict (id) do nothing;
 
-drop policy if exists "media public read" on storage.objects;
-create policy "media public read" on storage.objects
-  for select using (bucket_id = 'media');
+-- O bucket é público: as URLs das fotos abrem sem política de leitura.
+-- A leitura via API (listar/remover arquivos) fica restrita aos administradores.
+drop policy if exists "media admin select" on storage.objects;
+create policy "media admin select" on storage.objects
+  for select to authenticated using (bucket_id = 'media' and (select private.is_admin()));
 
 drop policy if exists "media admin insert" on storage.objects;
 create policy "media admin insert" on storage.objects
-  for insert to authenticated with check (bucket_id = 'media' and public.is_admin());
+  for insert to authenticated with check (bucket_id = 'media' and (select private.is_admin()));
 
 drop policy if exists "media admin update" on storage.objects;
 create policy "media admin update" on storage.objects
-  for update to authenticated using (bucket_id = 'media' and public.is_admin());
+  for update to authenticated using (bucket_id = 'media' and (select private.is_admin()));
 
 drop policy if exists "media admin delete" on storage.objects;
 create policy "media admin delete" on storage.objects
-  for delete to authenticated using (bucket_id = 'media' and public.is_admin());
+  for delete to authenticated using (bucket_id = 'media' and (select private.is_admin()));
